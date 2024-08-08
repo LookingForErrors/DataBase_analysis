@@ -8,3 +8,5 @@ with engine.connect() as connection:
     rows = result.fetchall()
     for row in rows:
         print(row)
+
+a = 2
