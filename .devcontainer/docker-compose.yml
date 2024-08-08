@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: pyapp
+    # image: python:3
+    build: 
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    environment:
+      - DB_URL=postgresql://postgres:postgres@postgres_db:5432/postgres
+    depends_on:
+      - postgres_db
+    network_mode: service:postgres_db
+    volumes:
+      - ../..:/home/workspaces/:cached
+      
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
